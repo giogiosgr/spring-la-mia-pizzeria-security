@@ -54,21 +54,8 @@
 							</ul>
 						</div>
 					</div>
-					<div class="mb-3">
-
-						<div class="mb-3">
-							<label for="price" class="form-label">Scegli il pizzaiolo dalla lista</label>
-							<select class="form-select" th:field="*{pizzaMaker}">
-								<option th:each="pizzaMaker : ${pizzaMakerList}"
-									th:text="${pizzaMaker.name} + ' ' + ${pizzaMaker.surname}"
-									th:value="${pizzaMaker.id}">
-								</option>
-							</select>
-						</div>
-
-					</div>
-					<button type="submit" class="btn btn-primary m-2">Conferma Inserimento</button>
-					<button type="reset" class="btn btn-primary m-2">Reset</button>
+					<button type="submit" class="btn btn-primary m-1">Conferma Inserimento</button>
+					<button type="reset" class="btn btn-primary m-1">Reset</button>
 				</form>
 			</div>
 		</div>

@@ -10,8 +10,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.*;
@@ -43,17 +41,13 @@ public class Pizza {
 	@Column(length = 1000)
 	private String photoUrl;
 
+	@NotNull
 	@Min(2)
 	@Column(name = "price", nullable = false)
 	private double price;
 
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
-	
-	@NotNull
-	@ManyToOne
-    @JoinColumn(name = "pizzaMaker_id")
-    private PizzaMaker pizzaMaker;
 
 	//@Transient
 	//private DecimalFormat formatter = new DecimalFormat("#,##0.00");
@@ -113,14 +107,6 @@ public class Pizza {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-	
-	public PizzaMaker getPizzaMaker() {
-		return pizzaMaker;
-	}
-	
-	public void setPizzaMaker(PizzaMaker pizzaMaker) {
-		this.pizzaMaker = pizzaMaker;
 	}
 
 }

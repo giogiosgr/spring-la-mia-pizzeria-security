@@ -15,8 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 import java.util.Optional;
 import com.example.demo.model.Pizza;
-import com.example.demo.model.PizzaMaker;
-import com.example.demo.repo.PizzaMakerRepository;
 import com.example.demo.repo.PizzaRepository;
 
 import jakarta.validation.Valid;
@@ -30,9 +28,6 @@ public class PizzaController {
 	// repository field con autowired per dependency injection
 	@Autowired
 	private PizzaRepository repo;
-	
-	@Autowired
-	private PizzaMakerRepository repoMaker;
 
 	@GetMapping
 	public String index(Model model) {
@@ -46,12 +41,8 @@ public class PizzaController {
 	@GetMapping("/show/{id}")
 	public String pizzaDetails(@PathVariable int id, Model model) {
 
-		Pizza pizza = repo.findById(id).get();
-		
-		// consegna al model della specifica pizza cercata tramite ID
-		model.addAttribute("pizza", pizza);
-		// consegna al model del pizzaiolo collegato alla stessa pizza
-		model.addAttribute("pizzaMaker", pizza.getPizzaMaker());
+		// consegna al model di una specifica ennupla pizza tramite ID
+		model.addAttribute("pizza", repo.findById(id).get());
 
 		return "/pizzas/show";
 	}
@@ -70,8 +61,6 @@ public class PizzaController {
 	public String pizzaCreate(Model model) {
 
 		model.addAttribute("pizza", new Pizza());
-			
-		model.addAttribute("pizzaMakerList", repoMaker.findAll());
 
 		return "/pizzas/create";
 	}
@@ -81,7 +70,6 @@ public class PizzaController {
 	public String store(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("pizzaMakerList", repoMaker.findAll());
 			return "/pizzas/create";
 		}
 
@@ -97,8 +85,6 @@ public class PizzaController {
 	public String edit(@PathVariable int id, Model model) {
 
 		model.addAttribute("pizza", repo.findById(id).get());
-		
-		model.addAttribute("pizzaMakerList", repoMaker.findAll());
 
 		return "/pizzas/edit";
 	}
@@ -108,7 +94,6 @@ public class PizzaController {
 	public String update(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("pizzaMakerList", repoMaker.findAll());
 			return "/pizzas/edit";
 		}
 
