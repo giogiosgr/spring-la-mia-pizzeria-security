@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -37,6 +39,10 @@ public class Discount {
 	private LocalDateTime offerStart;
 	
 	private LocalDateTime offerEnd;
+	
+	@ManyToOne
+	@JoinColumn(name="pizza_id", nullable=false)
+	private Pizza pizza;
 	
 	// getters e setters
 
@@ -71,5 +77,13 @@ public class Discount {
 	public void setOfferEnd(LocalDateTime offerEnd) {
 		this.offerEnd = offerEnd;
 	}
-	
+
+	public Pizza getPizza() {
+		return pizza;
+	}
+
+	public void setPizza(Pizza pizza) {
+		this.pizza = pizza;
+	}
+		
 }
