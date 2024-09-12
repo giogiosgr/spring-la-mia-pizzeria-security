@@ -28,6 +28,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/pizzas")
 public class PizzaController {
 
+	@Autowired
 	PizzaService pizzaService;
 
 	@GetMapping
