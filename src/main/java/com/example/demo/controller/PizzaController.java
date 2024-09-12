@@ -15,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 import java.util.Optional;
 import com.example.demo.model.Pizza;
+import com.example.demo.model.Discount;
+import com.example.demo.repo.DiscountRepository;
 import com.example.demo.repo.PizzaRepository;
 
 import jakarta.validation.Valid;
@@ -28,13 +30,16 @@ public class PizzaController {
 	// repository field con autowired per dependency injection
 	@Autowired
 	private PizzaRepository repo;
+	
+	@Autowired
+	private DiscountRepository repoD;
 
 	@GetMapping
 	public String index(Model model) {
 
 		// consegna dei dati a pizzas/index
 		model.addAttribute("pizzas", repo.findAll());
-
+		
 		return "/pizzas/index";
 	}
 
@@ -116,5 +121,24 @@ public class PizzaController {
 
 		return "redirect:/pizzas";
 	}
+	
+	// test
+	@GetMapping("/test")
+	public String test(Model model) {
 
+		Discount discount = new Discount();
+		
+		Pizza pizza = repo.findById(1).get();
+		
+		discount.setName("scontone");
+		
+		discount.setPizza(pizza);
+		
+		System.out.println("CIAO " + pizza.getDiscountNumber());
+		
+		repoD.save(discount);
+	
+		return "/pages/test";
+	}
+	
 }

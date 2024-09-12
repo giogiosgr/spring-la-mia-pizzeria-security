@@ -56,6 +56,9 @@ public class Pizza {
 	@OneToMany (mappedBy = "pizza", cascade = { CascadeType.REMOVE })   
 	private Set<Discount> discounts ;
 	
+	@Formula ("(Select count(pizzas.id) From pizzas)")
+	private Integer discountNumber;
+	
 	//@Transient
 	//private DecimalFormat formatter = new DecimalFormat("#,##0.00");
 
@@ -124,4 +127,12 @@ public class Pizza {
 		this.discounts = discounts;
 	}
 
+	public Integer getDiscountNumber() {
+		return discountNumber;
+	}
+
+	public void setDiscountNumber(Integer discountNumber) {
+		this.discountNumber = discountNumber;
+	}
+	
 }
