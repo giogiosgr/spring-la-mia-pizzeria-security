@@ -54,10 +54,10 @@ public class Pizza {
 	private LocalDateTime updatedAt;
 	
 	@OneToMany (mappedBy = "pizza", cascade = { CascadeType.REMOVE })   
-	private Set<Discount> discounts ;
+	private Set<Discount> discounts;
 	
 	@Formula ("(Select count(pizzas.id) From pizzas)")
-	private Integer discountNumber;
+	private Integer validDiscounts;
 	
 	//@Transient
 	//private DecimalFormat formatter = new DecimalFormat("#,##0.00");
@@ -127,12 +127,12 @@ public class Pizza {
 		this.discounts = discounts;
 	}
 
-	public Integer getDiscountNumber() {
-		return discountNumber;
+	public Integer getValidDiscounts() {
+		return validDiscounts;
 	}
 
-	public void setDiscountNumber(Integer discountNumber) {
-		this.discountNumber = discountNumber;
+	public void setValidDiscounts(Integer validDiscounts) {
+		this.validDiscounts = validDiscounts;
 	}
 	
 }

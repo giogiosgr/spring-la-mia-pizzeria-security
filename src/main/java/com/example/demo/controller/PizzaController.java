@@ -18,6 +18,7 @@ import com.example.demo.model.Pizza;
 import com.example.demo.model.Discount;
 import com.example.demo.repo.DiscountRepository;
 import com.example.demo.repo.PizzaRepository;
+import com.example.demo.service.PizzaService;
 
 import jakarta.validation.Valid;
 
@@ -27,19 +28,14 @@ import jakarta.validation.Valid;
 @RequestMapping("/pizzas")
 public class PizzaController {
 
-	// repository field con autowired per dependency injection
-	@Autowired
-	private PizzaRepository repo;
-	
-	@Autowired
-	private DiscountRepository repoD;
+	PizzaService pizzaService;
 
 	@GetMapping
 	public String index(Model model) {
 
 		// consegna dei dati a pizzas/index
-		model.addAttribute("pizzas", repo.findAll());
-		
+		model.addAttribute("pizzas", pizzaService.getAll());
+
 		return "/pizzas/index";
 	}
 
@@ -47,7 +43,7 @@ public class PizzaController {
 	public String pizzaDetails(@PathVariable int id, Model model) {
 
 		// consegna al model di una specifica ennupla pizza tramite ID
-		model.addAttribute("pizza", repo.findById(id).get());
+		model.addAttribute("pizza", pizzaService.getById(id));
 
 		return "/pizzas/show";
 	}
@@ -56,7 +52,7 @@ public class PizzaController {
 	public String pizzaSearch(@RequestParam String name, Model model) {
 
 		// consegna al model di specifiche ennuple di pizza tramite JPA Query Methods
-		model.addAttribute("pizzas", repo.findByNameContainingOrderByName(name));
+		model.addAttribute("pizzas", pizzaService.getByNameWithOrderByName(name));
 
 		return "/pizzas/index";
 	}
@@ -72,14 +68,15 @@ public class PizzaController {
 
 	// STORE
 	@PostMapping("/create")
-	public String store(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
+	public String store(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult, Model model,
+			RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
 			return "/pizzas/create";
 		}
 
-		repo.save(pizzaForm);
-		
+		pizzaService.save(pizzaForm);
+
 		attributes.addFlashAttribute("successMessage", "Pizza " + pizzaForm.getName() + " creata con successo");
 
 		return "redirect:/pizzas";
@@ -89,21 +86,22 @@ public class PizzaController {
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable int id, Model model) {
 
-		model.addAttribute("pizza", repo.findById(id).get());
+		model.addAttribute("pizza", pizzaService.getById(id));
 
 		return "/pizzas/edit";
 	}
 
 	// UPDATE
 	@PostMapping("/edit/{id}")
-	public String update(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
+	public String update(@Valid @ModelAttribute("pizza") Pizza pizzaForm, BindingResult bindingResult, Model model,
+			RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
 			return "/pizzas/edit";
 		}
 
-		repo.save(pizzaForm);
-		
+		pizzaService.save(pizzaForm);
+
 		attributes.addFlashAttribute("successMessage", "Pizza " + pizzaForm.getName() + " modificata con successo");
 
 		return "redirect:/pizzas";
@@ -112,33 +110,38 @@ public class PizzaController {
 	// DELETE
 	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable int id, Model model, RedirectAttributes attributes) {
-		
-		Pizza deletedPizza = repo.findById(id).get();
 
-		repo.deleteById(id);
-		
+		Pizza deletedPizza = pizzaService.getById(id);
+
+		pizzaService.deleteById(id);
+
 		attributes.addFlashAttribute("successMessage", "Pizza " + deletedPizza.getName() + " eliminata con successo");
 
 		return "redirect:/pizzas";
 	}
-	
+
 	// test
+
+	@Autowired
+	private DiscountRepository repoD;
+
 	@GetMapping("/test")
 	public String test(Model model) {
 
 		Discount discount = new Discount();
-		
-		Pizza pizza = repo.findById(1).get();
-		
+
+		Pizza pizza = pizzaService.getById(1);
+
 		discount.setName("scontone");
-		
+
 		discount.setPizza(pizza);
-		
-		System.out.println("CIAO " + pizza.getDiscountNumber());
-		
+
 		repoD.save(discount);
-	
+
+		for (Discount x : pizza.getDiscounts())
+			System.out.println(x.getName());
+
 		return "/pages/test";
 	}
-	
+
 }
