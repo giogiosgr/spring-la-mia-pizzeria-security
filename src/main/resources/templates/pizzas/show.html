@@ -17,10 +17,18 @@
 			<div class="card mx-4 my-4" style="width: 30rem;">
 				<img th:src="@{{url}(url=${pizza.photoUrl})}" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h3 class="card-text text-center fs-4">Offerte collegate a questa pizza:</h3>
-					<ul class="list-group">
-						<li th:each="discount : ${pizza.discounts}" th:text="${discount.name}" class="list-group-item"></li>
-					</ul>
+					<th:block th:if="${pizza.discounts.size()} > 0">
+						<h3 class="card-text text-center fs-4">Offerte valide collegate a questa pizza:</h3>
+						<ul class="list-group">
+							<th:block th:each="discount : ${pizza.discounts}">
+								<li th:if="${localDateTime} < ${discount.offerEnd}" th:text="${discount.name}"
+									class="list-group-item"></li>
+							</th:block>
+						</ul>
+					</th:block>
+					<block th:unless="${pizza.discounts.size()} > 0">
+						<h3 class="card-text text-center fs-4">Non ci sono offerte valide collegate a questa pizza</h3>
+					</block>
 				</div>
 			</div>
 		</div>

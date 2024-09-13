@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import com.example.demo.model.Pizza;
@@ -45,6 +46,7 @@ public class PizzaController {
 
 		// consegna al model di una specifica ennupla pizza tramite ID
 		model.addAttribute("pizza", pizzaService.getById(id));
+		model.addAttribute("localDateTime", LocalDateTime.now());
 
 		return "/pizzas/show";
 	}
