@@ -57,7 +57,9 @@ public class Pizza {
 	@OneToMany (mappedBy = "pizza", cascade = { CascadeType.REMOVE })   
 	private List<Discount> discounts;
 	
-	@Formula ("(Select count(pizzas.id) From pizzas)")
+	@Formula ("(SELECT count(pizzas.id) FROM pizzas " 
+			+ "LEFT JOIN discounts ON pizzas.id = discounts.pizza_id AND CURRENT_DATE() < discounts.offer_end "
+			+ "WHERE discounts.pizza_id = id)")
 	private Integer validDiscounts;
 	
 	//@Transient
