@@ -7,22 +7,23 @@
 
 	<header th:insert="~{fragments/fragments :: navbar('show')}"></header>
 
-	<main class="container text-center">
+	<main class="container">
 
-		<div class="py-3">
+		<div class="py-3 text-center">
 			<h1 th:text="'Descrizione della pizza ' + ${pizza.name}"></h1>
 		</div>
 
-		<div class="py-3">
-			<h2>Lorem Pizzum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut
-				labore et
-				dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut
-				aliquid ex ea commodi consequatur.
-				Duis aute irure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-				sint obcaecat cupiditat non proident,
-				sunt in culpa qui officia deserunt mollit anim id est laborum.</h2>
+		<div class="d-flex justify-content-center">
+			<div class="card mx-4 my-4" style="width: 30rem;">
+				<img th:src="@{{url}(url=${pizza.photoUrl})}" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h3 class="card-text text-center fs-4">Offerte collegate a questa pizza:</h3>
+					<ul class="list-group">
+						<li th:each="discount : ${pizza.discounts}" th:text="${discount.name}" class="list-group-item"></li>
+					</ul>
+				</div>
+			</div>
 		</div>
-
 	</main>
 
 	<th:block th:replace="~{fragments/fragments :: scripts}"></th:block>

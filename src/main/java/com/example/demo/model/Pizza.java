@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.Formula;
@@ -54,7 +55,7 @@ public class Pizza {
 	private LocalDateTime updatedAt;
 	
 	@OneToMany (mappedBy = "pizza", cascade = { CascadeType.REMOVE })   
-	private Set<Discount> discounts;
+	private List<Discount> discounts;
 	
 	@Formula ("(Select count(pizzas.id) From pizzas)")
 	private Integer validDiscounts;
@@ -119,11 +120,11 @@ public class Pizza {
 		this.updatedAt = updatedAt;
 	}
 
-	public Set<Discount> getDiscounts() {
+	public List<Discount> getDiscounts() {
 		return discounts;
 	}
 
-	public void setDiscounts(Set<Discount> discounts) {
+	public void setDiscounts(List<Discount> discounts) {
 		this.discounts = discounts;
 	}
 
