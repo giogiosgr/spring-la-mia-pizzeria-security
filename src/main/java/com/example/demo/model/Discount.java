@@ -39,6 +39,7 @@ public class Discount {
 	@Column(name = "name", nullable = false, unique = true)
 	private String name;
 
+	@NotNull
 	private LocalDateTime offerStart;
 
 	@Future

@@ -21,6 +21,7 @@ import com.example.demo.model.Discount;
 import com.example.demo.repo.DiscountRepository;
 import com.example.demo.repo.PizzaRepository;
 import com.example.demo.service.DiscountService;
+import com.example.demo.service.PizzaService;
 
 import jakarta.validation.Valid;
 
@@ -33,12 +34,18 @@ public class DiscountController {
 
 	@Autowired
 	DiscountService dService;
+	
+	@Autowired
+	PizzaService pizzaService;
 
 	// CREATE
-	@GetMapping("/create")
-	public String create(Model model) {
+	@GetMapping("/create/{id}")
+	public String create(@PathVariable int id, Model model) {
 
-		model.addAttribute("discount", new Discount());
+		Discount discount = new Discount();
+		discount.setPizza(pizzaService.getById(id));
+		discount.setOfferStart(LocalDateTime.now());
+		model.addAttribute("discount", discount);
 
 		return "/discounts/create";
 	}
@@ -71,7 +78,7 @@ public class DiscountController {
 	}
 
 	// UPDATE
-	@PostMapping("/edit/{id}")
+	@PostMapping("/edit")
 	public String update(@Valid @ModelAttribute("discount") Discount discountForm, BindingResult bindingResult,
 			Model model, RedirectAttributes attributes) {
 
