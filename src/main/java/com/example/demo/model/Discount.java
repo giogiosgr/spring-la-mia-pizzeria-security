@@ -42,6 +42,7 @@ public class Discount {
 	@NotNull
 	private LocalDateTime offerStart;
 
+	@NotNull
 	@Future
 	private LocalDateTime offerEnd;
 
