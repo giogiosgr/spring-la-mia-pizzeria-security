@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -44,11 +45,11 @@ public class DiscountController {
 
 	// STORE
 	@PostMapping("/create")
-	public String store(@Valid @ModelAttribute("discount") Discount discountForm, BindingResult bindingResult, Model model,
-			RedirectAttributes attributes) {
+	public String store(@Valid @ModelAttribute("discount") Discount discountForm, BindingResult bindingResult,
+			Model model, RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
-			return "/pizzas/create";
+			return "/discounts/create";
 		}
 
 		dService.save(discountForm);
@@ -62,23 +63,26 @@ public class DiscountController {
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable int id, Model model) {
 
-		model.addAttribute("discount", dService.getById(id));
+		Discount discount = dService.getById(id);
+		discount.setOfferStart(LocalDateTime.now());
+		model.addAttribute("discount", discount);
 
 		return "/discounts/edit";
 	}
 
 	// UPDATE
 	@PostMapping("/edit/{id}")
-	public String update(@Valid @ModelAttribute("discount") Discount discountForm, BindingResult bindingResult, Model model,
-			RedirectAttributes attributes) {
+	public String update(@Valid @ModelAttribute("discount") Discount discountForm, BindingResult bindingResult,
+			Model model, RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
-			return "/pizzas/edit";
+			return "/discounts/edit";
 		}
 
 		dService.save(discountForm);
 
-		attributes.addFlashAttribute("successMessage", "Offerta " + discountForm.getName() + " modificata con successo");
+		attributes.addFlashAttribute("successMessage",
+				"Offerta " + discountForm.getName() + " modificata con successo");
 
 		return "redirect:/pizzas";
 	}

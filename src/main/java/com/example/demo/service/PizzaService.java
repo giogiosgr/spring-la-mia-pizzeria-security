@@ -12,39 +12,39 @@ import jakarta.validation.Valid;
 
 @Service
 public class PizzaService {
-	
+
 	// repository field con autowired per dependency injection
 	@Autowired
 	private PizzaRepository repo;
-	
+
 	public Pizza getById(Integer id) {
-		
+
 		return repo.findById(id).get();
-		
+
 	}
 
 	public List<Pizza> getAll() {
-		
+
 		return repo.findAll();
-		
+
 	}
 
 	public Object getByNameWithOrderByName(String name) {
-	
+
 		return repo.findByNameContainingOrderByName(name);
-		
+
 	}
 
 	public void save(@Valid Pizza pizzaForm) {
-		
+
 		repo.save(pizzaForm);
-		
+
 	}
 
 	public void deleteById(int id) {
-		
+
 		repo.deleteById(id);
-		
+
 	}
-	
+
 }

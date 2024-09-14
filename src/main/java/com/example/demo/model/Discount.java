@@ -3,6 +3,7 @@ package com.example.demo.model;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +13,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -23,27 +26,28 @@ import jakarta.validation.constraints.Size;
 @Table(name = "discounts")
 
 public class Discount {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	// Viene usata la Bean Validation
 
 	@NotNull
 	@NotEmpty
-	@Size(min=2, max=255)
+	@Size(min = 2, max = 255)
 	@Column(name = "name", nullable = false, unique = true)
 	private String name;
-	
+
 	private LocalDateTime offerStart;
-	
+
+	@Future
 	private LocalDateTime offerEnd;
-	
+
 	@ManyToOne
-	@JoinColumn(name="pizza_id", nullable=false)
+	@JoinColumn(name = "pizza_id", nullable = false)
 	private Pizza pizza;
-	
+
 	// getters e setters
 
 	public Integer getId() {
@@ -85,5 +89,5 @@ public class Discount {
 	public void setPizza(Pizza pizza) {
 		this.pizza = pizza;
 	}
-		
+
 }

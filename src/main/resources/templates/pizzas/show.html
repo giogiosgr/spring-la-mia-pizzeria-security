@@ -21,8 +21,14 @@
 						<h3 class="card-text text-center fs-4">Offerte valide collegate a questa pizza:</h3>
 						<ul class="list-group">
 							<th:block th:each="discount : ${pizza.discounts}">
-								<li th:if="${localDateTime} < ${discount.offerEnd}" th:text="${discount.name}"
-									class="list-group-item"></li>
+								<li th:if="${localDateTime} < ${discount.offerEnd}" class="list-group-item">
+									<div class="d-flex justify-content-around align-items-center">
+										<p class="my-2" th:text="${discount.name}"></p>
+										<a class="btn btn-sm btn-warning m-1"
+											th:href="@{'/discounts/edit/{id}'(id=${discount.id})}"
+											role="button">Modifica</a>
+									</div>
+								</li>
 							</th:block>
 						</ul>
 					</th:block>
