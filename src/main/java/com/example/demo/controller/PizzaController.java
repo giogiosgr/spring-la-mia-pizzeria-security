@@ -19,6 +19,7 @@ import com.example.demo.model.Pizza;
 import com.example.demo.model.Discount;
 import com.example.demo.repo.DiscountRepository;
 import com.example.demo.repo.PizzaRepository;
+import com.example.demo.service.IngredientService;
 import com.example.demo.service.PizzaService;
 
 import jakarta.validation.Valid;
@@ -31,6 +32,9 @@ public class PizzaController {
 
 	@Autowired
 	PizzaService pizzaService;
+	
+	@Autowired
+	IngredientService iService;
 
 	@GetMapping
 	public String index(Model model) {
@@ -46,6 +50,7 @@ public class PizzaController {
 
 		// consegna al model di una specifica ennupla pizza tramite ID
 		model.addAttribute("pizza", pizzaService.getById(id));
+		// consegna di un localDateTime per confronto con le date di fine offerta e mostrare solo quelle valide
 		model.addAttribute("localDateTime", LocalDateTime.now());
 
 		return "/pizzas/show";
@@ -65,6 +70,7 @@ public class PizzaController {
 	public String pizzaCreate(Model model) {
 
 		model.addAttribute("pizza", new Pizza());
+		model.addAttribute("ingredients", iService.getAll());
 
 		return "/pizzas/create";
 	}
@@ -75,6 +81,7 @@ public class PizzaController {
 			RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("ingredients", iService.getAll());
 			return "/pizzas/create";
 		}
 
@@ -90,6 +97,7 @@ public class PizzaController {
 	public String edit(@PathVariable int id, Model model) {
 
 		model.addAttribute("pizza", pizzaService.getById(id));
+		model.addAttribute("ingredients", iService.getAll());
 
 		return "/pizzas/edit";
 	}
@@ -100,6 +108,7 @@ public class PizzaController {
 			RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("ingredients", iService.getAll());
 			return "/pizzas/edit";
 		}
 

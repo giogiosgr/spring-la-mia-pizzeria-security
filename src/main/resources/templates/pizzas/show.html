@@ -17,6 +17,16 @@
 			<div class="card mx-4 my-4" style="width: 30rem;">
 				<img th:src="@{{url}(url=${pizza.photoUrl})}" class="card-img-top" alt="...">
 				<div class="card-body">
+					<th:block th:if="${pizza.ingredients.size()} > 0">
+						<h3>Questa superba pizza è fatta con:</h3>
+						<ul class="list-group">
+							<th:block for:each="ingredient : ${pizza.ingredients}">
+								<li class="list-group-item">
+									<p class="my-2" th:text="${ingredient.name}"></p>
+								</li>
+							</th:block>
+						</ul>
+					</th:block>
 					<th:block th:if="${pizza.validDiscounts} > 0">
 						<h3 class="card-text text-center fs-4">Offerte valide collegate a questa pizza:</h3>
 						<ul class="list-group">
