@@ -29,7 +29,7 @@ public class PizzaService {
 
 	}
 
-	public Object getByNameWithOrderByName(String name) {
+	public List<Pizza> getByNameWithOrderByName(String name) {
 
 		return repo.findByNameContainingOrderByName(name);
 

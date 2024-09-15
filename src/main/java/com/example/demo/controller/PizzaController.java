@@ -54,7 +54,7 @@ public class PizzaController {
 	@GetMapping("/search")
 	public String pizzaSearch(@RequestParam String name, Model model) {
 
-		// consegna al model di specifiche ennuple di pizza tramite JPA Query Methods
+		// consegna al model di specifiche ennuple di pizza tramite JPA Query Methods (tramite service)
 		model.addAttribute("pizzas", pizzaService.getByNameWithOrderByName(name));
 
 		return "/pizzas/index";

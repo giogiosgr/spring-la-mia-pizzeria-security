@@ -34,10 +34,19 @@ public class IngredientController {
 
 		return "/ingredients/index";
 	}
+	
+	@GetMapping("/search")
+	public String ingredientSearch(@RequestParam String name, Model model) {
+
+		// consegna al model di specifiche ennuple di ingredienti tramite JPA Query Methods (tramite service)
+		model.addAttribute("ingredients", iService.getByNameWithOrderByName(name));
+
+		return "/ingredients/index";
+	}
 
 	// CREATE
 	@GetMapping("/create")
-	public String pizzaCreate(Model model) {
+	public String create(Model model) {
 
 		model.addAttribute("ingredient", new Ingredient());
 

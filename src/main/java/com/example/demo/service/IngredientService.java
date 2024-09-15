@@ -22,6 +22,12 @@ public class IngredientService {
 		return repo.findById(id).get();
 
 	}
+	
+	public Object getByNameWithOrderByName(String name) {
+
+		return repo.findByNameContainingOrderByName(name);
+
+	}
 
 	public List<Ingredient> getAll() {
 
