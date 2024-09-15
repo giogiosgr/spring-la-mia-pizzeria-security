@@ -79,7 +79,7 @@ public class DiscountController {
 	}
 
 	// UPDATE
-	@PostMapping("/edit")
+	@PostMapping("/edit/{id}")
 	public String update(@Valid @ModelAttribute("discount") Discount discountForm, BindingResult bindingResult,
 			Model model, RedirectAttributes attributes) {
 
