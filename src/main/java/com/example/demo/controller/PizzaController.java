@@ -53,9 +53,7 @@ public class PizzaController {
 		model.addAttribute("pizza", pizzaService.getById(id));
 		// consegna di un localDateTime per confronto con le date di fine offerta e mostrare solo quelle valide
 		model.addAttribute("localDateTime", LocalDateTime.now());
-		
-		model.addAttribute("ingredients", pizzaService.getById(id).getIngredients());
-
+	
 		return "/pizzas/show";
 	}
 
