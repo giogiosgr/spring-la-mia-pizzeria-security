@@ -13,8 +13,7 @@
 
 		<div class="row">
 			<div class="col-6">
-				<form id="discounts-form" th:object="${discount}" th:action="@{/discounts/create}"
-					method="POST">
+				<form id="discounts-form" th:object="${discount}" th:action="@{/discounts/create}" method="POST">
 					<div class="mb-3">
 						<label for="name" class="form-label">Titolo Offerta</label>
 						<input name="name" type="text" class="form-control" id="name" th:field="*{name}"
@@ -27,7 +26,7 @@
 					</div>
 					<div class="mb-3 d-none">
 						<input name="start-date" type="datetime-local" class="form-control" id="start-date"
-							th:field="*{offerStart}">	
+							th:field="*{offerStart}">
 					</div>
 					<div class="mb-3">
 						<label for="end-date" class="form-label">Data di fine offerta</label>
