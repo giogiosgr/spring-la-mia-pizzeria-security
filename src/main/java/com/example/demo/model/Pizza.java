@@ -14,6 +14,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -61,6 +64,14 @@ public class Pizza {
 			+ "LEFT JOIN discounts ON pizzas.id = discounts.pizza_id AND CURRENT_DATE() < discounts.offer_end "
 			+ "WHERE discounts.pizza_id = id)")
 	private Integer validDiscounts;
+	
+	@ManyToMany()
+	@JoinTable(
+		name = "pizza_ingredient",
+		joinColumns = @JoinColumn(name = "pizza_id"),
+		inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+	)
+	private List<Ingredient> ingredients;
 	
 	//@Transient
 	//private DecimalFormat formatter = new DecimalFormat("#,##0.00");
@@ -136,6 +147,14 @@ public class Pizza {
 
 	public void setValidDiscounts(Integer validDiscounts) {
 		this.validDiscounts = validDiscounts;
+	}
+
+	public List<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Ingredient> ingredients) {
+		this.ingredients = ingredients;
 	}
 	
 }
