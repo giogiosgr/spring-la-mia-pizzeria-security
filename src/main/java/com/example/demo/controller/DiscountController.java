@@ -45,7 +45,7 @@ public class DiscountController {
 		Discount discount = new Discount();
 		discount.setPizza(pizzaService.getById(id));
 		discount.setOfferStart(LocalDateTime.now());
-		discount.setOfferEnd(LocalDateTime.now().plusDays(10));
+		discount.setOfferEnd(LocalDateTime.now().plusDays(7));
 		model.addAttribute("discount", discount);
 
 		return "/discounts/create";
