@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import com.example.demo.model.Pizza;
 import com.example.demo.model.Discount;
+import com.example.demo.model.Ingredient;
 import com.example.demo.repo.DiscountRepository;
 import com.example.demo.repo.PizzaRepository;
 import com.example.demo.service.IngredientService;
@@ -52,6 +53,8 @@ public class PizzaController {
 		model.addAttribute("pizza", pizzaService.getById(id));
 		// consegna di un localDateTime per confronto con le date di fine offerta e mostrare solo quelle valide
 		model.addAttribute("localDateTime", LocalDateTime.now());
+		
+		model.addAttribute("ingredients", pizzaService.getById(id).getIngredients());
 
 		return "/pizzas/show";
 	}
@@ -140,10 +143,12 @@ public class PizzaController {
 	@GetMapping("/test")
 	public String test(Model model) {
 
-		Discount discount = new Discount();
-
 		Pizza pizza = pizzaService.getById(1);
 
+		/*
+		 
+		Discount discount = new Discount();  
+		 
 		discount.setName("scontone");
 
 		discount.setPizza(pizza);
@@ -152,6 +157,12 @@ public class PizzaController {
 
 		for (Discount x : pizza.getDiscounts())
 			System.out.println(x.getName());
+			
+		*/
+		
+		List<Ingredient> test = pizza.getIngredients();
+		
+		System.out.println(test.get(0).getName());
 
 		return "/pages/test";
 	}
