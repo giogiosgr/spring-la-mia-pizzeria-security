@@ -50,11 +50,11 @@
 							<td th:text="${ingredient.name}" class="fs-4"></td>
 							<td th:text="${ingredient.description}" class="pt-3"></td>
 							<td class="text-center">
-								<a class="btn btn-sm btn-warning m-1"
+								<a class="btn btn-warning m-1"
 									th:href="@{'http://localhost:8080/ingredients/edit/{id}'(id=${ingredient.id})}"
 									role="button">Modifica</a>
 								<!-- Button trigger modal -->
-								<button type="button" class="btn btn-sm btn-danger m-1" data-bs-toggle="modal"
+								<button type="button" class="btn btn-danger m-1" data-bs-toggle="modal"
 									th:data-bs-target="'#delete-' + ${ingredient.id}">
 									Cancella
 								</button>

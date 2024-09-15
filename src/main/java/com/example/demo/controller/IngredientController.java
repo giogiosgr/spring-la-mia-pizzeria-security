@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.model.Ingredient;
+import com.example.demo.model.Pizza;
 import com.example.demo.service.IngredientService;
 
 import jakarta.validation.Valid;
@@ -102,7 +103,7 @@ public class IngredientController {
 
 		iService.deleteById(id);
 
-		attributes.addFlashAttribute("successMessage", "Ingrediente " + deletedIngredient.getName() + " eliminata con successo");
+		attributes.addFlashAttribute("successMessage", "Ingrediente " + deletedIngredient.getName() + " eliminato con successo");
 
 		return "redirect:/ingredients";
 	}
