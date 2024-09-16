@@ -59,7 +59,7 @@
 						<div th:each="ingredient : ${ingredients}" class="form-check" role="group"
 							aria-label="Basic checkbox toggle button group">
 							<input type="checkbox" class="form-check-input" autocomplete="off"
-								th:value="${ingredient.id}" th:id="'ingredient-' + ${ingredient.id}"
+								th:value="${ingredient.id}" th:id="|ingredient-${ingredient.id}|"
 								th:field="${pizza.ingredients}">
 							<label class="form-check-label" th:for="|ingredient-${ingredient.id}|">[[
 								${ingredient.name} ]]</label>

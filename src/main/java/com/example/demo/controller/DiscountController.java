@@ -34,7 +34,7 @@ public class DiscountController {
 
 	@Autowired
 	DiscountService dService;
-	
+
 	@Autowired
 	PizzaService pizzaService;
 
@@ -91,6 +91,19 @@ public class DiscountController {
 
 		attributes.addFlashAttribute("successMessage",
 				"Offerta " + discountForm.getName() + " modificata con successo");
+
+		return "redirect:/pizzas";
+	}
+
+	// DELETE
+	@PostMapping("/delete/{id}")
+	public String delete(@PathVariable int id, Model model, RedirectAttributes attributes) {
+
+		Discount deletedDiscount = dService.getById(id);
+
+		dService.deleteById(id);
+
+		attributes.addFlashAttribute("successMessage", "Offerta " + deletedDiscount.getName() + " eliminata con successo");
 
 		return "redirect:/pizzas";
 	}

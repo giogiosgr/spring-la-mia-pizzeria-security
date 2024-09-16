@@ -9,7 +9,7 @@
 
 	<main class="container">
 
-		<div class="py-3 text-center">
+		<div class="py-2 text-center">
 			<h1 th:text="'Descrizione della pizza ' + ${pizza.name}"></h1>
 		</div>
 
@@ -22,28 +22,64 @@
 						<ul class="list-group">
 							<th:block th:each="ingredient : ${pizza.ingredients}">
 								<li class="list-group-item">
-									<p class="my-2" th:text="${ingredient.name}"></p>
+									<p class="my-2 fw-bold text-center" th:text="${ingredient.name}"></p>
 								</li>
 							</th:block>
 						</ul>
 					</th:block>
 					<th:block th:if="${pizza.validDiscounts} > 0">
-						<h3 class="card-text text-center fs-4 mt-2">Offerte valide collegate a questa pizza:</h3>
+						<h4 class="card-text text-center mt-3">Offerte valide collegate a questa pizza:</h4>
 						<ul class="list-group">
 							<th:block th:each="discount : ${pizza.discounts}">
 								<li th:if="${localDateTime} < ${discount.offerEnd}" class="list-group-item">
-									<div class="d-flex justify-content-around align-items-center">
+									<div class="d-flex justify-content-between align-items-center">
 										<p class="my-2" th:text="${discount.name}"></p>
-										<a class="btn btn-sm btn-warning m-1"
-											th:href="@{'/discounts/edit/{id}'(id=${discount.id})}"
-											role="button">Modifica</a>
+										<div>
+											<a class="btn btn-sm btn-warning m-1"
+												th:href="@{'/discounts/edit/{id}'(id=${discount.id})}"
+												role="button">Modifica</a>
+											<!-- Button trigger modal -->
+											<button type="button" class="btn btn-sm btn-danger m-1"
+												data-bs-toggle="modal" th:data-bs-target="'#delete-' + ${discount.id}">
+												Cancella
+											</button>
+											<!-- Modal -->
+											<div class="modal fade" th:id="'delete-' + ${discount.id}" tabindex="-1"
+												aria-labelledby="exampleModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h1 class="modal-title fs-5" id="exampleModalLabel">Conferma
+																cancellazione</h1>
+															<button type="button" class="btn-close"
+																data-bs-dismiss="modal" aria-label="Close"></button>
+														</div>
+														<div class="modal-body">
+															Sei sicuro di voler eliminare l'offerta
+															[[${discount.name}]]?
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary"
+																data-bs-dismiss="modal">Annulla</button>
+															<form class="d-inline-block"
+																th:action="@{http://localhost:8080/discounts/delete/{id}(id=${discount.id})}"
+																method="post">
+																<button class="btn btn-danger m-1" type="submit"
+																	id="submitButton">Conferma</button>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</li>
 							</th:block>
 						</ul>
 					</th:block>
 					<block th:unless="${pizza.validDiscounts} > 0">
-						<h3 class="card-text text-center fs-4">Non ci sono offerte valide collegate a questa pizza</h3>
+						<h4 class="card-text text-center mt-3">Non ci sono offerte valide collegate a questa pizza
+						</h4>
 					</block>
 					<div class="d-flex justify-content-center mt-3">
 						<a class="btn btn-sm btn-success m-1" th:href="@{/discounts/create/{id}(id=*{id})}"
