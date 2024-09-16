@@ -50,6 +50,9 @@
 							<td th:text="${ingredient.name}" class="fs-4"></td>
 							<td th:text="${ingredient.description}" class="pt-3"></td>
 							<td class="text-center">
+								<a class="btn btn-success m-1"
+									th:href="@{'http://localhost:8080/ingredients/show/{id}'(id=${ingredient.id})}"
+									role="button">Dettagli</a>
 								<a class="btn btn-warning m-1"
 									th:href="@{'http://localhost:8080/ingredients/edit/{id}'(id=${ingredient.id})}"
 									role="button">Modifica</a>

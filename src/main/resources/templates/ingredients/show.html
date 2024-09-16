@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/fragments :: head('pizza')}"></head>
+
+<body>
+
+	<header th:insert="~{fragments/fragments :: navbar('show')}"></header>
+
+	<main class="container">
+
+		<th:block th:if="${ingredient.pizzas.size()} > 0">
+			<div class="py-2">
+				<h1 th:text="'Lista delle pizze che contengono ' + ${ingredient.name}"></h1>
+			</div>
+			<ol class="list-group list-group-numbered">
+				<th:block th:each="pizza : ${ingredient.pizzas}">
+					<li class="list-group-item" th:text="${pizza.name}"></li>
+				</th:block>
+			</ol>
+		</th:block>
+
+		<th:block th:unless="${ingredient.pizzas.size()} > 0">
+			<div class="py-2">
+				<h1 th:text="'Nessuna pizza contiene ' + ${ingredient.name}"></h1>
+			</div>
+		</th:block>
+
+	</main>
+
+	<th:block th:replace="~{fragments/fragments :: scripts}"></th:block>
+
+</body>
+
+</html>

@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +25,10 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/ingredients")
 public class IngredientController {
-	
+
 	@Autowired
 	IngredientService iService;
-	
+
 	@GetMapping
 	public String index(Model model) {
 
@@ -35,11 +37,21 @@ public class IngredientController {
 
 		return "/ingredients/index";
 	}
-	
+
+	@GetMapping("/show/{id}")
+	public String pizzaDetails(@PathVariable int id, Model model) {
+
+		// consegna al model di una specifica ennupla ingrediente tramite ID
+		model.addAttribute("ingredient", iService.getById(id));
+
+		return "/ingredients/show";
+	}
+
 	@GetMapping("/search")
 	public String ingredientSearch(@RequestParam String name, Model model) {
 
-		// consegna al model di specifiche ennuple di ingredienti tramite JPA Query Methods (tramite service)
+		// consegna al model di specifiche ennuple di ingredienti tramite JPA Query
+		// Methods (tramite service)
 		model.addAttribute("ingredients", iService.getByNameWithOrderByName(name));
 
 		return "/ingredients/index";
@@ -56,8 +68,8 @@ public class IngredientController {
 
 	// STORE
 	@PostMapping("/create")
-	public String store(@Valid @ModelAttribute("ingredient") Ingredient ingredientForm, BindingResult bindingResult, Model model,
-			RedirectAttributes attributes) {
+	public String store(@Valid @ModelAttribute("ingredient") Ingredient ingredientForm, BindingResult bindingResult,
+			Model model, RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
 			return "/ingredients/create";
@@ -65,7 +77,8 @@ public class IngredientController {
 
 		iService.save(ingredientForm);
 
-		attributes.addFlashAttribute("successMessage", "Ingrediente " + ingredientForm.getName() + " creato con successo");
+		attributes.addFlashAttribute("successMessage",
+				"Ingrediente " + ingredientForm.getName() + " creato con successo");
 
 		return "redirect:/ingredients";
 	}
@@ -81,8 +94,8 @@ public class IngredientController {
 
 	// UPDATE
 	@PostMapping("/edit/{id}")
-	public String update(@Valid @ModelAttribute("ingredient") Ingredient ingredientForm, BindingResult bindingResult, Model model,
-			RedirectAttributes attributes) {
+	public String update(@Valid @ModelAttribute("ingredient") Ingredient ingredientForm, BindingResult bindingResult,
+			Model model, RedirectAttributes attributes) {
 
 		if (bindingResult.hasErrors()) {
 			return "/ingredients/edit";
@@ -90,7 +103,8 @@ public class IngredientController {
 
 		iService.save(ingredientForm);
 
-		attributes.addFlashAttribute("successMessage", "Ingrediente " + ingredientForm.getName() + " modificato con successo");
+		attributes.addFlashAttribute("successMessage",
+				"Ingrediente " + ingredientForm.getName() + " modificato con successo");
 
 		return "redirect:/ingredients";
 	}
@@ -103,9 +117,10 @@ public class IngredientController {
 
 		iService.deleteById(id);
 
-		attributes.addFlashAttribute("successMessage", "Ingrediente " + deletedIngredient.getName() + " eliminato con successo");
+		attributes.addFlashAttribute("successMessage",
+				"Ingrediente " + deletedIngredient.getName() + " eliminato con successo");
 
 		return "redirect:/ingredients";
 	}
-	
+
 }
