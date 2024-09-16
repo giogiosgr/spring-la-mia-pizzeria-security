@@ -103,7 +103,7 @@ public class DiscountController {
 
 		dService.deleteById(id);
 
-		attributes.addFlashAttribute("successMessage", "Offerta " + deletedDiscount.getName() + " eliminata con successo");
+		attributes.addFlashAttribute("successMessage", "Offerta " + deletedDiscount.getName() + " della pizza " + deletedDiscount.getPizza().getName() + " eliminata con successo");
 
 		return "redirect:/pizzas";
 	}
