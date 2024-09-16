@@ -19,13 +19,12 @@
 				<div class="card-body">
 					<th:block th:if="${pizza.ingredients.size()} > 0">
 						<h3 class="card-text text-center">Questa superba pizza è fatta con:</h3>
-						<ul class="list-group">
+						<div class="list-group">
 							<th:block th:each="ingredient : ${pizza.ingredients}">
-								<li class="list-group-item">
-									<p class="my-2 fw-bold text-center" th:text="${ingredient.name}"></p>
-								</li>
+								<a th:href="@{'/ingredients/show/{id}'(id=${ingredient.id})}"
+									class="list-group-item list-group-item-action" th:text="${ingredient.name}"></a>
 							</th:block>
-						</ul>
+						</div>
 					</th:block>
 					<th:block th:if="${pizza.validDiscounts} > 0">
 						<h4 class="card-text text-center mt-3">Offerte valide collegate a questa pizza:</h4>

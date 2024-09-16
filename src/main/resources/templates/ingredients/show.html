@@ -11,13 +11,13 @@
 
 		<th:block th:if="${ingredient.pizzas.size()} > 0">
 			<div class="py-2">
-				<h1 th:text="'Lista delle pizze che contengono ' + ${ingredient.name}"></h1>
+				<h2 th:text="'Lista delle pizze che contengono ' + ${ingredient.name}"></h2>
 			</div>
-			<ol class="list-group list-group-numbered">
+			<div class="list-group">
 				<th:block th:each="pizza : ${ingredient.pizzas}">
-					<li class="list-group-item" th:text="${pizza.name}"></li>
+					<a th:href="@{'/pizzas/show/{id}'(id=${pizza.id})}" class="list-group-item list-group-item-action" th:text="${pizza.name}"></a>
 				</th:block>
-			</ol>
+			</div>
 		</th:block>
 
 		<th:block th:unless="${ingredient.pizzas.size()} > 0">
