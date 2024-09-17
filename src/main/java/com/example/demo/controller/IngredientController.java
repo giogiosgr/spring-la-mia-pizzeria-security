@@ -114,12 +114,11 @@ public class IngredientController {
 	public String delete(@PathVariable int id, Model model, RedirectAttributes attributes) {
 
 		Ingredient ingredient = iService.getById(id);
-		
+
 		// rimozione delle associazioni prima di eliminare l'ingrediente
 		for (Pizza pizza : ingredient.getPizzas()) {
-	        pizza.getIngredients().remove(ingredient);
-	    }
-		ingredient.getPizzas().clear();
+			pizza.getIngredients().remove(ingredient);
+		}
 
 		iService.delete(ingredient);
 
