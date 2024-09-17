@@ -44,7 +44,7 @@ public class Ingredient {
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
 	
-	@ManyToMany(mappedBy = "ingredients", cascade = { CascadeType.REMOVE })
+	@ManyToMany(mappedBy = "ingredients")
 	private List<Pizza> pizzas;
 	
 	// getters e setters

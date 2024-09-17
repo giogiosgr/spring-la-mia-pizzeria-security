@@ -113,12 +113,18 @@ public class IngredientController {
 	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable int id, Model model, RedirectAttributes attributes) {
 
-		Ingredient deletedIngredient = iService.getById(id);
+		Ingredient ingredient = iService.getById(id);
+		
+		// rimozione delle associazioni prima di eliminare l'ingrediente
+		for (Pizza pizza : ingredient.getPizzas()) {
+	        pizza.getIngredients().remove(ingredient);
+	    }
+		ingredient.getPizzas().clear();
 
-		iService.deleteById(id);
+		iService.delete(ingredient);
 
 		attributes.addFlashAttribute("successMessage",
-				"Ingrediente " + deletedIngredient.getName() + " eliminato con successo");
+				"Ingrediente " + ingredient.getName() + " eliminato con successo");
 
 		return "redirect:/ingredients";
 	}

@@ -46,5 +46,11 @@ public class IngredientService {
 		repo.deleteById(id);
 
 	}
+	
+	public void delete(Ingredient ingredient) {
+
+		repo.delete(ingredient);
+
+	}
 
 }
