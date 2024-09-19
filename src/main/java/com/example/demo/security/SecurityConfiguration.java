@@ -2,6 +2,7 @@ package com.example.demo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,12 +20,13 @@ public class SecurityConfiguration {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.authorizeHttpRequests()
-		.requestMatchers("/user").hasAuthority("USER")
+		.requestMatchers("/pizzas/create", "/pizzas/edit/**").hasAuthority("ADMIN")
+		.requestMatchers("/ingredients", "/ingredients/**").hasAuthority("ADMIN")
+		.requestMatchers(HttpMethod.POST, "/pizzas/**").hasAuthority("ADMIN")
+		.requestMatchers("/pizzas/**").hasAnyAuthority("ADMIN","USER")
+		.requestMatchers("/user").hasAnyAuthority("ADMIN", "USER")
 		.requestMatchers("/admin").hasAuthority("ADMIN")
-		.requestMatchers("/**").hasAuthority("USER")
-		//.requestMatchers("/pizzas").hasAuthority("USER")
-		//.requestMatchers("/pizzas/edit/*").hasAuthority("ADMIN")
-		//.requestMatchers("/pizzas/create").hasAuthority("ADMIN")
+		.requestMatchers("/**").permitAll()
 		.and().formLogin().and().logout();
 
 		return http.build();

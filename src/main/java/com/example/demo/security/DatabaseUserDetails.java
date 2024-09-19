@@ -13,7 +13,13 @@ import com.example.demo.model.Role;
 import com.example.demo.model.User;
 
 public class DatabaseUserDetails implements UserDetails {
-
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@SuppressWarnings("unused")
 	private final Integer id;
 	private final String username;
 	private final String password;
