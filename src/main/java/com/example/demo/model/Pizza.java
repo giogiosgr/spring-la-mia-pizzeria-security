@@ -8,6 +8,9 @@ import java.util.Set;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -57,10 +60,11 @@ public class Pizza {
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
 	
-	@OneToMany (mappedBy = "pizza", cascade = { CascadeType.REMOVE })   
+	@OneToMany(mappedBy = "pizza", cascade = { CascadeType.REMOVE })   
+	@JsonManagedReference
 	private List<Discount> discounts;
 	
-	@Formula ("(SELECT count(pizzas.id) FROM pizzas " 
+	@Formula("(SELECT count(pizzas.id) FROM pizzas " 
 			+ "LEFT JOIN discounts ON pizzas.id = discounts.pizza_id AND CURRENT_DATE() < discounts.offer_end "
 			+ "WHERE discounts.pizza_id = id)")
 	private Integer validDiscounts;
@@ -71,6 +75,7 @@ public class Pizza {
 		joinColumns = @JoinColumn(name = "pizza_id"),
 		inverseJoinColumns = @JoinColumn(name = "ingredient_id")
 	)
+	@JsonBackReference
 	private List<Ingredient> ingredients;
 	
 	//@Transient
