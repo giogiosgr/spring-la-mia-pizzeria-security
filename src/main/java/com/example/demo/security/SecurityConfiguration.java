@@ -20,10 +20,12 @@ public class SecurityConfiguration {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.authorizeHttpRequests()
-		.requestMatchers("/pizzas/create", "/pizzas/edit/**").hasAuthority("ADMIN")
-		.requestMatchers("/ingredients", "/ingredients/**").hasAuthority("ADMIN")
+		.requestMatchers("/pizzas/create", "/pizzas/edit/*").hasAuthority("ADMIN")
+		.requestMatchers("/pizzas", "pizzas/show").hasAnyAuthority("ADMIN", "USER")
+		.requestMatchers("/ingredients/create", "/ingredients/edit/*").hasAuthority("ADMIN")
+		.requestMatchers("/ingredients", "ingredients/show").hasAnyAuthority("ADMIN", "USER")
 		.requestMatchers(HttpMethod.POST, "/pizzas/**").hasAuthority("ADMIN")
-		.requestMatchers("/pizzas/**").hasAnyAuthority("ADMIN","USER")
+		.requestMatchers(HttpMethod.POST, "/ingredients/**").hasAuthority("ADMIN")
 		.requestMatchers("/user").hasAnyAuthority("ADMIN", "USER")
 		.requestMatchers("/admin").hasAuthority("ADMIN")
 		.requestMatchers("/**").permitAll()
