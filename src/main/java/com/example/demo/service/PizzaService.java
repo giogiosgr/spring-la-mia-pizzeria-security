@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,12 @@ public class PizzaService {
 		return repo.findById(id).get();
 
 	}
+	
+	public Optional<Pizza> getOptionalById(Integer id) {
+
+		return repo.findById(id);
+
+	}
 
 	public List<Pizza> getAll() {
 
@@ -40,7 +48,20 @@ public class PizzaService {
 		repo.save(pizzaForm);
 
 	}
-
+	
+	public Pizza create(Pizza pizza) {
+		
+		return repo.save(pizza);
+		
+	}
+	
+    public Pizza update(Pizza pizza) {
+		
+		pizza.setUpdatedAt(LocalDateTime.now());
+		return repo.save(pizza);
+		
+	}
+	
 	public void deleteById(int id) {
 
 		repo.deleteById(id);
