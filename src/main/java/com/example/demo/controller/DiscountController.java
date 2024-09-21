@@ -97,7 +97,7 @@ public class DiscountController {
 
 	// DELETE
 	@PostMapping("/delete/{id}")
-	public String delete(@PathVariable int id, Model model, RedirectAttributes attributes) {
+	public String delete(@PathVariable int id, RedirectAttributes attributes) {
 
 		Discount deletedDiscount = dService.getById(id);
 

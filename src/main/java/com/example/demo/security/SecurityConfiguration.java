@@ -29,7 +29,9 @@ public class SecurityConfiguration {
 		.requestMatchers("/user").hasAnyAuthority("ADMIN", "USER")
 		.requestMatchers("/admin").hasAuthority("ADMIN")
 		.requestMatchers("/**").permitAll()
-		.and().formLogin().and().logout();
+		.and().formLogin().and().logout()
+		.and().exceptionHandling()
+		.and().csrf().disable();
 
 		return http.build();
 	}

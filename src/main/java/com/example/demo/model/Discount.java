@@ -27,7 +27,6 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "discounts")
-
 public class Discount {
 
 	@Id

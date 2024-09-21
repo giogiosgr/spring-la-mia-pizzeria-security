@@ -111,7 +111,7 @@ public class IngredientController {
 
 	// DELETE
 	@PostMapping("/delete/{id}")
-	public String delete(@PathVariable int id, Model model, RedirectAttributes attributes) {
+	public String delete(@PathVariable int id, RedirectAttributes attributes) {
 
 		Ingredient ingredient = iService.getById(id);
 
