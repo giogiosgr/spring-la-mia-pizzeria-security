@@ -47,7 +47,6 @@ public class Ingredient {
 	private LocalDateTime updatedAt;
 	
 	@ManyToMany(mappedBy = "ingredients")
-	@JsonManagedReference
 	private List<Pizza> pizzas;
 	
 	// getters e setters
